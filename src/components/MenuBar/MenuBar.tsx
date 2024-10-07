@@ -1,7 +1,5 @@
-import React from 'react';
 import { MenuItem } from '../MenuItem';
 import { BsFillPersonFill, BsGraphUpArrow, BsMemory } from 'react-icons/bs';
-import { BiSolidHome } from 'react-icons/bi';
 
 export function MenuBar() {
   return (

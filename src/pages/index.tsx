@@ -1,178 +1,183 @@
-import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
-import { MenuBar } from '../components/MenuBar';
-import { Card } from '../components/Card';
+import { CardButton } from '../components/Card';
+import { Layout } from '../components/Layout';
+import { RadarChart } from '../components/RadarChart';
+import type { ReaderChartProps } from '../components/RadarChart';
+import { PopOver } from '../components/PopOver';
 import '../styles/global.css';
+import { useState } from 'react';
+import { PortFolioModalContent } from '../modalContents';
 
-// const pageStyles = {
-//   color: '#232129',
-//   padding: 96,
-//   fontFamily: '-apple-system, Roboto, sans-serif, serif',
-// };
-// const headingStyles = {
-//   marginTop: 0,
-//   marginBottom: 64,
-//   maxWidth: 320,
-// };
-// const headingAccentStyles = {
-//   color: '#663399',
-// };
-// const paragraphStyles = {
-//   marginBottom: 48,
-// };
-// const codeStyles = {
-//   color: '#8A6534',
-//   padding: 4,
-//   backgroundColor: '#FFF4DB',
-//   fontSize: '1.25rem',
-//   borderRadius: 4,
-// };
-// const listStyles = {
-//   marginBottom: 96,
-//   paddingLeft: 0,
-// };
-// const doclistStyles = {
-//   paddingLeft: 0,
-// };
-// const listItemStyles = {
-//   fontWeight: 300,
-//   fontSize: 24,
-//   maxWidth: 560,
-//   marginBottom: 30,
-// };
+const IndexPage = (props: PageProps) => {
+  const [isOpenPopOverId, setIsOpenPopOverId] = useState<string | null>(null);
+  const handleOpenPopOver = (id: string) => {
+    setIsOpenPopOverId(id);
+  };
 
-// const linkStyle = {
-//   color: '#8954A8',
-//   fontWeight: 'bold',
-//   fontSize: 16,
-//   verticalAlign: '5%',
-// };
-
-// const docLinkStyle = {
-//   ...linkStyle,
-//   listStyleType: 'none',
-//   display: `inline-block`,
-//   marginBottom: 24,
-//   marginRight: 12,
-// };
-
-// const descriptionStyle = {
-//   color: '#232129',
-//   fontSize: 14,
-//   marginTop: 10,
-//   marginBottom: 0,
-//   lineHeight: 1.25,
-// };
-
-// const docLinks = [
-//   {
-//     text: 'TypeScript Documentation',
-//     url: 'https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/',
-//     color: '#8954A8',
-//   },
-//   {
-//     text: 'GraphQL Typegen Documentation',
-//     url: 'https://www.gatsbyjs.com/docs/how-to/local-development/graphql-typegen/',
-//     color: '#8954A8',
-//   },
-// ];
-
-// const badgeStyle = {
-//   color: '#fff',
-//   backgroundColor: '#088413',
-//   border: '1px solid #088413',
-//   fontSize: 11,
-//   fontWeight: 'bold',
-//   letterSpacing: 1,
-//   borderRadius: 4,
-//   padding: '4px 6px',
-//   display: 'inline-block',
-//   position: 'relative' as 'relative',
-//   top: -2,
-//   marginLeft: 10,
-//   lineHeight: 1,
-// };
-
-// const links = [
-//   {
-//     text: 'Tutorial',
-//     url: 'https://www.gatsbyjs.com/docs/tutorial/getting-started/',
-//     description:
-//       "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-//     color: '#E95800',
-//   },
-//   {
-//     text: 'How to Guides',
-//     url: 'https://www.gatsbyjs.com/docs/how-to/',
-//     description:
-//       "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-//     color: '#1099A8',
-//   },
-//   {
-//     text: 'Reference Guides',
-//     url: 'https://www.gatsbyjs.com/docs/reference/',
-//     description:
-//       "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-//     color: '#BC027F',
-//   },
-//   {
-//     text: 'Conceptual Guides',
-//     url: 'https://www.gatsbyjs.com/docs/conceptual/',
-//     description:
-//       'Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.',
-//     color: '#0D96F2',
-//   },
-//   {
-//     text: 'Plugin Library',
-//     url: 'https://www.gatsbyjs.com/plugins',
-//     description:
-//       'Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.',
-//     color: '#8EB814',
-//   },
-//   {
-//     text: 'Build and Host',
-//     url: 'https://www.gatsbyjs.com/cloud',
-//     badge: true,
-//     description:
-//       'Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!',
-//     color: '#663399',
-//   },
-// ];
-
-const IndexPage: React.FC<PageProps> = () => {
-  const cardList = [
-    {
-      imgPath: 'MainImg.png',
-      title: 'PortFolio',
-    },
-    {
-      imgPath: 'MainImg.png',
-      title: 'PortFolio',
-    },
-    {
-      imgPath: 'MainImg.png',
-      title: 'PortFolio',
-    },
-  ];
+  const handleClosePopOver = () => {
+    setIsOpenPopOverId(null);
+  };
 
   return (
-    <main>
-      <div className="fixed w-full h-full">
-        <MenuBar />
-      </div>
+    <Layout>
       <div className="flex flex-col items-center">
         <img src="MainImg.png" alt="MainImage" className="object-cover" />
         <h1 className="text-[36px] text-primary my-8">-Skill-</h1>
         <div className="flex gap-14">
           {cardList.map((card, index) => (
-            <Card key={index} imgPath={card.imgPath} title={card.title} />
+            <>
+              <CardButton
+                key={index}
+                imgPath={card.imgPath}
+                title={card.title}
+                handleClick={handleOpenPopOver}
+                popOverRelationId={card.popOverId}
+              />
+              {card.popOverId === isOpenPopOverId && (
+                <PopOver handleClosePopOver={handleClosePopOver}>
+                  {ModalContent[card.popOverId]()}
+                </PopOver>
+              )}
+            </>
           ))}
         </div>
+        <div>
+          <div className="flex justify-between items-center mt-[100px]">
+            {readerData.map((readerProps, index) => (
+              <RadarChart key={index} {...readerProps} />
+            ))}
+          </div>
+          <p className="text-center text-secondary font-bold">
+            ３：実務経験あり　２：個人開発に使用　１：勉強中
+          </p>
+        </div>
       </div>
-    </main>
+    </Layout>
   );
 };
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>Home Page</title>;
+export const Head: HeadFC = () => <title>Ryota Labo</title>;
+
+const ModalContent: {
+  [key: string]: () => JSX.Element;
+} = {
+  portfolio: PortFolioModalContent,
+};
+
+const cardList = [
+  {
+    imgPath: 'MainImg.png',
+    title: 'PortFolio',
+    popOverId: 'portfolio',
+  },
+  {
+    imgPath: 'MyDailyTodo.png',
+    title: 'MyDailyTodo',
+    popOverId: 'myDailyTodo',
+  },
+];
+
+const readerData: ReaderChartProps[] = [
+  {
+    title: 'フロントエンドスキル',
+    data: [
+      {
+        skill: 'HTML',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'Tailwind CSS',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'TypeScript',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'React',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'Next.js',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'Gatsby',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'Remix',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'Storybook',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'Figma',
+        level: 2,
+        fullMark: 3,
+      },
+    ],
+  },
+  {
+    title: 'バックエンドスキル',
+    data: [
+      {
+        skill: 'python',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'C#',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'ASP.NET',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'Godot',
+        level: 1,
+        fullMark: 3,
+      },
+    ],
+  },
+  {
+    title: 'その他スキル',
+    data: [
+      {
+        skill: 'Git',
+        level: 3,
+        fullMark: 3,
+      },
+      {
+        skill: 'Docker',
+        level: 2,
+        fullMark: 3,
+      },
+      {
+        skill: 'AWS',
+        level: 1,
+        fullMark: 3,
+      },
+      {
+        skill: 'SQL',
+        level: 3,
+        fullMark: 3,
+      },
+    ],
+  },
+];

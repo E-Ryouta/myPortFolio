@@ -1,4 +1,3 @@
-import React from 'react';
 import { MenuItem } from './MenuItem';
 import { BiSolidHome } from 'react-icons/bi';
 
