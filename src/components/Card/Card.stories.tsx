@@ -1,13 +1,12 @@
-import React from 'react';
-import { Card } from './Card';
+import { CardButton } from './CardButton';
 
 export default {
-  title: 'Components/Card',
-  component: Card,
+  title: 'Components/CardButton',
+  component: CardButton,
 };
 
-const DefaultCard = () => (
-  <Card imgPath="https://placehold.jp/150x150.png" title="Test" description="testtesttesttest" />
+const DefaultCardButton = () => (
+  <CardButton imgPath="https://placehold.jp/150x150.png" title="Test" />
 );
 
-export const CardDefault = DefaultCard.bind({});
+export const CardButtonDefault = DefaultCardButton.bind({});
