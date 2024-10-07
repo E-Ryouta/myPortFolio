@@ -2,13 +2,14 @@ module.exports = {
   content: ['./src/pages/*.{js,jsx,ts,tsx}', './src/components/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: {
-      base: '#A6BDB0',
+      base: '#EEF0DD',
       primary: '#015958',
       secondary: '#143838',
       white: '#FFFFFF',
     },
     fontFamily: {
       inter: ['Inter', 'sans-serif'],
+      abhaya: ['Abhaya Libre ExtraBold', 'serif'],
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.03em' }],
